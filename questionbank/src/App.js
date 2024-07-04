@@ -3,32 +3,35 @@ import "./App.css"
 import "./questions.js"
 import { qb } from "./questions.js";
 
-function Display({ q, a, ansgrid, fullgrid, updater, decrement }) {
+let localqb = qb
+
+function Display({ q, a, ansgrid, fullgrid, updater, decrement, serialnumber }) {
   // const handleupdate = () => { console.log('yes') }
 
   return (
     <>
       <div className="playground">
-        <div style={{width:"100%",height:"5%",
-          display:"flex",
-          flexDirection:"row",
-          justifyContent:"space-evenly",
-          alignContent:"center"
+        <div style={{
+          width: "100%", height: "5%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          alignContent: "center"
         }}>
           <WrongPanel />
-        <Prevbutton decrement={decrement} />
-        <CorrectPanel />
+          <Prevbutton decrement={decrement} />
+          <CorrectPanel />
         </div>
-        
-        
-        
+
+
+
         <div className="questionpanel">
           <h1> {q} </h1>
         </div>
         <div className="optionpanel">
           {fullgrid.map(x => {
             return (
-              <Options value={ansgrid[x - 1]} opclick={x} correctans={a} updater={updater} />
+              <Options value={ansgrid[x - 1]} opclick={x} correctans={a} updater={updater} serialnumber={serialnumber} />
             )
           })}
         </div>
@@ -38,7 +41,7 @@ function Display({ q, a, ansgrid, fullgrid, updater, decrement }) {
   );
 }
 
-function Options({ value, opclick, correctans, updater }) {
+function Options({ serialnumber, value, opclick, correctans, updater }) {
   const [hoverable, sethoverable] = useState(false)
   let [baccy, setbaccy] = useState("rgba(61, 57, 57, 0.364)")
   // hoverable?(const baccy = !hoverable ? "rgba(61, 57, 57, 0.364)" : "beige"):();
@@ -53,20 +56,25 @@ function Options({ value, opclick, correctans, updater }) {
     justifyContent: "space-evenly"
   }
   const handleclick = () => {
+    localqb[serialnumber].useranswer = opclick
+
     if (opclick === correctans) {
-      correct ++;
+      correct++;
       setbaccy("green")
     }
     else {
-      wrong ++;
+      wrong++;
       setbaccy("red")
     }
     setTimeout(() => {
       updater()
       setbaccy('rgba(61, 57, 57, 0.364)')
     }, 1000);
+
   }
 
+  if (localqb[serialnumber].useranswer == correctans) option_style.backgroundColor="green"
+  if (localqb[serialnumber].useranswer != correctans && localqb[serialnumber].useranswer != "") option_style.backgroundColor="red"
   const handleOnMouseEnter = () => sethoverable(true)
   const handleOnMouseLeave = () => sethoverable(false)
 
@@ -143,15 +151,15 @@ function Prevbutton({ decrement }) {
 let correct = 0;
 let wrong = 0;
 
-function CorrectPanel(){
-  return(
+function CorrectPanel() {
+  return (
     <div className="correct">
       <h1>correct:{correct} </h1>
     </div>
   )
 }
-function WrongPanel(){
-  return(
+function WrongPanel() {
+  return (
     <div className="wrong" >
       <h1>wrong:{wrong} </h1>
     </div>
@@ -169,7 +177,7 @@ export default function App() {
   ])
   const option_grid = ['1', '2', '3', '4']
   const handleretreat = () => {
-    if(serialnumber > 0) {
+    if (serialnumber > 0) {
       setserialnumber(serialnumber - 1);
       setanslist(
         [
@@ -193,7 +201,7 @@ export default function App() {
           qb[serialnumber + 1].op4,
         ]
       )
-     }
+    }
 
 
   }
@@ -208,6 +216,7 @@ export default function App() {
         ansgrid={anslist}
         updater={handleupdate}
         decrement={handleretreat}
+        serialnumber={serialnumber}
       />
     </>);
 }
