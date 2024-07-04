@@ -9,7 +9,7 @@
 
 }
 .questionpanel{
-  height: 20%;
+  height: 15%;
   width: 80%;
   background: rgba(53, 226, 171, 0.697);
   border: black 3px solid;
@@ -19,7 +19,7 @@
   align-items: center;
 }
 .optionpanel{
-  height: 70%;
+  height: 60%;
   width: 80%;
   background-color: antiquewhite;
   border: black 3px solid;
@@ -36,3 +36,4 @@
   background-color: beige;
   border-radius: 50px;
 } */
+
