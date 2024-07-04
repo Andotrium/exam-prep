@@ -2,6 +2,9 @@ import { useState } from "react";
 import "./App.css"
 import "./questions.js"
 import { qb } from "./questions.js";
+import background from "./background.mp4"
+import { Color } from "p5";
+
 
 let localqb = qb
 
@@ -57,7 +60,7 @@ function Options({ serialnumber, value, opclick, correctans, updater }) {
   }
   const handleclick = () => {
     localqb[serialnumber].useranswer = opclick
-
+    
     if (opclick === correctans) {
       correct++;
       setbaccy("green")
@@ -70,14 +73,14 @@ function Options({ serialnumber, value, opclick, correctans, updater }) {
       updater()
       setbaccy('rgba(61, 57, 57, 0.364)')
     }, 1000);
-
+    
   }
-
+  
   if (localqb[serialnumber].useranswer == correctans) option_style.backgroundColor="green"
   if (localqb[serialnumber].useranswer != correctans && localqb[serialnumber].useranswer != "") option_style.backgroundColor="red"
   const handleOnMouseEnter = () => sethoverable(true)
   const handleOnMouseLeave = () => sethoverable(false)
-
+  
   return (<>
     <div
       style={option_style}
@@ -154,14 +157,14 @@ let wrong = 0;
 function CorrectPanel() {
   return (
     <div className="correct">
-      <h1>correct:{correct} </h1>
+      <h1 style={{color:"lime"}}>correct:{correct} </h1>
     </div>
   )
 }
 function WrongPanel() {
   return (
     <div className="wrong" >
-      <h1>wrong:{wrong} </h1>
+      <h1 style={{color:"red"}}>wrong:{wrong} </h1>
     </div>
   )
 }
@@ -191,7 +194,7 @@ export default function App() {
 
   }
   const handleupdate = () => {
-    if (serialnumber < 80) {
+    if (serialnumber < 79) {
       setserialnumber(serialnumber + 1);
       setanslist(
         [
@@ -209,6 +212,10 @@ export default function App() {
 
   return (
     <>
+    <div className="content">
+      <video autoPlay muted loop className="bgvideo" >
+        <source src={background} type="video/mp4"></source>
+      </video>
       <Display
         q={qb[serialnumber].q}
         a={qb[serialnumber].ans}
@@ -218,5 +225,7 @@ export default function App() {
         decrement={handleretreat}
         serialnumber={serialnumber}
       />
+      </div>
     </>);
+
 }
