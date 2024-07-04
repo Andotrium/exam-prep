@@ -3,7 +3,7 @@ import "./App.css"
 import "./questions.js"
 import { qb } from "./questions.js";
 import background from "./background.mp4"
-import { Color } from "p5";
+// import { Color } from "p5";
 
 
 let localqb = qb
