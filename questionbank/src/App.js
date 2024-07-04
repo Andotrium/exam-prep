@@ -4,12 +4,24 @@ import "./questions.js"
 import { qb } from "./questions.js";
 
 function Display({ q, a, ansgrid, fullgrid, updater, decrement }) {
-  const handleupdate = () => { console.log('yes') }
+  // const handleupdate = () => { console.log('yes') }
 
   return (
     <>
       <div className="playground">
+        <div style={{width:"100%",height:"5%",
+          display:"flex",
+          flexDirection:"row",
+          justifyContent:"space-evenly",
+          alignContent:"center"
+        }}>
+          <WrongPanel />
         <Prevbutton decrement={decrement} />
+        <CorrectPanel />
+        </div>
+        
+        
+        
         <div className="questionpanel">
           <h1> {q} </h1>
         </div>
@@ -31,8 +43,6 @@ function Options({ value, opclick, correctans, updater }) {
   let [baccy, setbaccy] = useState("rgba(61, 57, 57, 0.364)")
   // hoverable?(const baccy = !hoverable ? "rgba(61, 57, 57, 0.364)" : "beige"):();
   if (hoverable && baccy == "rgba(61, 57, 57, 0.364)") { baccy = "beige" }
-
-
   let option_style = {
     width: "90%",
     height: "20%",
@@ -44,9 +54,11 @@ function Options({ value, opclick, correctans, updater }) {
   }
   const handleclick = () => {
     if (opclick === correctans) {
+      correct ++;
       setbaccy("green")
     }
     else {
+      wrong ++;
       setbaccy("red")
     }
     setTimeout(() => {
@@ -104,7 +116,7 @@ function Nextbutton({ updater }) {
 function Prevbutton({ decrement }) {
   const [hoverable, sethoverable] = useState(false);
   const styling = {
-    height: "5%",
+    height: "100%",
     width: "5%",
     backgroundColor: !hoverable ? "rgba(53, 226, 171, 0.697)" : "white",
     border: "black 1px solid",
@@ -126,6 +138,23 @@ function Prevbutton({ decrement }) {
         <p>Previous</p>
       </div>
     </>
+  )
+}
+let correct = 0;
+let wrong = 0;
+
+function CorrectPanel(){
+  return(
+    <div className="correct">
+      <h1>correct:{correct} </h1>
+    </div>
+  )
+}
+function WrongPanel(){
+  return(
+    <div className="wrong" >
+      <h1>wrong:{wrong} </h1>
+    </div>
   )
 }
 

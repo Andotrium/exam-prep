@@ -36,4 +36,22 @@
   background-color: beige;
   border-radius: 50px;
 } */
+.wrong{
+  background-color: red;
+  border: black 1px solid;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+}
+.correct{
+  background-color: green;
+  border: black 1px solid;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+}
 
